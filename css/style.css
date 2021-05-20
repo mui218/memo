@@ -1,0 +1,271 @@
+/* 背景 */
+
+main {
+  background-image: url(../images/amanogawa2.png);
+  background-size: cover;
+  text-align: center;
+}
+
+/***** ヘッダー *****/
+.title {
+  display: inline-block;
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px;
+  font-family: "Hannari";
+  font-family: "Sawarabi Mincho";
+  background-color:rgba(0, 0, 0, .5);
+  width:538px;
+  margin: auto;
+  margin-top: 50px;
+  color: white;
+  text-shadow: 1px 0 0 black, 0 1px 0 black, -1px 0 0 black, 0 -1px 0 black;
+}
+
+
+
+/***** メイン *****/
+/* レイアウト */
+
+
+.main {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+    margin-top:-10px ;
+
+}
+
+.sasa_wrapper {
+  position: relative;
+}
+
+.sasa {
+  width: 700px;
+  height: 700px;
+  background-image: url(../images/sasa.png);
+  background-size: cover;
+}
+
+.wish_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 1000px;
+}
+
+.wish_box {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 300px;
+}
+
+/* 短冊 */
+
+
+
+.tanzaku_1{
+  width:40px;
+  position: absolute;
+  left:0px;
+  top:250px;
+  visibility: hidden;
+}
+.tanzaku_2 {
+  width:40px;
+  position: absolute;
+  left:80px;
+  top:155px;
+  visibility: hidden;
+}
+.tanzaku_3 {
+  width:40px;
+  position: absolute;
+  left:100px;
+  top:290px;
+  visibility: hidden;
+}
+.tanzaku_4 {
+  width:40px;
+  position: absolute;
+  left:230px;
+  top:230px;
+  visibility: hidden;
+}
+.tanzaku_5 {
+  width:40px;
+  position: absolute;
+  left:320px;
+  top:140px;
+  visibility: hidden;
+}
+.tanzaku_6 {
+  width:40px;
+  position: absolute;
+  left:250px;
+  top:330px;
+  visibility: hidden;
+}
+.tanzaku_7 {
+  width:40px;
+  position: absolute;
+  left:410px;
+  top:370px;
+  visibility: hidden;
+}
+.tanzaku_8 {
+  width:40px;
+  position: absolute;
+  left:480px;
+  top:120px;
+  visibility: hidden;
+}
+.tanzaku_9 {
+  width:40px;
+  position: absolute;
+  left:580px;
+  top:320px;
+  visibility: hidden;
+}
+
+.tanzaku_switch {
+  visibility: visible;
+}
+
+
+
+ /* 入力フォーム */
+
+ .wish_input_title{
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+ }
+
+.wish_input_area {
+   margin-bottom: 20px;
+   width: 80%;
+   min-height: 80px;
+}
+
+.wish_button {
+  display: flex;
+  justify-content: space-around;
+  width: 250px;
+}
+
+.do_wish {
+  padding:.5em;
+  border: 1px solid #000;
+}
+
+.do_wish:hover {
+  background-color: #000;
+  color:#fff;
+}
+
+.cansell_wish {
+  padding:.5em;
+  border: 1px solid #000;
+}
+
+.cansell_wish:hover {
+  background-color: #000;
+  color:#fff;
+}
+
+/* テキスト */
+
+.bottom_text_area{
+text-align: left;
+padding-bottom: 50px;
+}
+.bottom_text{
+  padding: .5em;
+  font-size: 20px;
+  font-weight: bold;
+  border: 1px solid #fff;
+  background: rgba(255, 255, 255, .5);
+  color:#000;
+  width: 60%;
+  min-height: 100px;
+  margin: auto ;
+  margin-top: -20px;
+}
+
+
+/* モーダル */
+
+.content{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    margin: 0 auto;
+    padding: 40px;
+}
+.modal{
+    display: none;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.modal__bg{
+    background: rgba(0,0,0,0.8);
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+}
+.modal__content{
+    background: #fff;
+    left: 50%;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 60%;
+    text-align: center;
+}
+
+.wish_title_modal {
+  margin-bottom: 20px;
+}
+
+.wish_title_text {
+  margin-bottom: 20px;
+}
+
+/* 達成 */
+
+.complete {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.complete_push {
+  display: block;
+}
+
+.button_complete{
+  width: 50px;
+  border: 1px solid #000;
+  text-align: center;
+  padding: 8px;
+  margin: 30px auto 0px;
+}
+
+.button_complete_push {
+  display: none;
+}
+
+.button_complete:hover{
+  color: #fff;
+  background-color: #000;
+}

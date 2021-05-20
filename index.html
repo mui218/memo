@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+</head>
+<body>
+  <!-- <header>
+    <h1 class="title">夜空に願いを七夕ゲーム</h1>
+  </header> -->
+  <main>
+    <h1 class="title" style=>夜空に願いを七夕ゲーム</h1>
+
+    <div class="main">
+      <div class="sasa_wrapper">
+        <img class="tanzaku_1" id="tanzaku_1" src="images/tanzaku_1.png" alt="">
+        <img class="tanzaku_2" id="tanzaku_2" src="images/tanzaku_2.png" alt="">
+        <img class="tanzaku_3" src="images/tanzaku_3.png" alt="">
+        <img class="tanzaku_4" src="images/tanzaku_4.png" alt="">
+        <img class="tanzaku_5" src="images/tanzaku_5.png" alt="">
+        <img class="tanzaku_6" src="images/tanzaku_6.png" alt="">
+        <img class="tanzaku_7" src="images/tanzaku_7.png" alt="">
+        <img class="tanzaku_8" src="images/tanzaku_1.png" alt="">
+        <img class="tanzaku_9" src="images/tanzaku_3.png" alt="">
+        <p class="sasa"></p>
+        <!-- <img class="sasa" src="images/sasa.png" alt=""> -->
+      </div>
+      <div class="wish_wrapper">
+        <div class="wish_box">
+          <h2 class="wish_input_title">願いを入力</h2>
+          <input type="text" id="input" style="margin-bottom:20px ;">
+          <textarea class="wish_input_area" id="text_area"></textarea>
+          <ul class="wish_button">
+            <li class="do_wish" id="save">お願いする</li>
+            <li class="cansell_wish" id="clear">取り消す</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="bottom_text_area">
+        <p class="bottom_text">コメント</p>
+      </div>
+    </div>
+  </main>
+  <!-- モーダル -->
+  <div class="modal js-modal">
+    <div class="modal__bg js-modal-close"></div>
+    <div class="modal__content">
+      <p class="complete">達成おめでとう</p>
+      <p style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">お願い事</p>
+      <p class="wish_title_modal">お願いタイトル</p>
+      <p style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">具体的行動</p>
+      <p class="wish_title_text">具体的行動</p>
+      <p class="button_complete" id="complete_button">達成</p>
+    </div>
+  </div>
+  <!--modal-->
+  <footer>
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    let wish_title = $('#input').val();
+    let wish_text = $('#text_area').val();
+    let complete_judge = 0;
+    let date = { title: wish_title, text: wish_text, judge: complete_judge };
+
+    let tanzaku_number_box = [];
+    let tanzaku_number = 0;
+
+    let complete_count = 0
+
+    //リロード時にローカルストレージレングスを変更
+    if (localStorage.length < 1) {
+      tanzaku_number_box = []
+    } else if (localStorage.length < 2) {
+      tanzaku_number_box = ["1"];
+      tanzaku_number = 1;
+    } else if (localStorage.length < 3) {
+      tanzaku_number_box = ["1", "2"];
+      tanzaku_number = 2;
+    } else if (localStorage.length < 4) {
+      tanzaku_number_box = ["1", "2", "3"];
+      tanzaku_number = 3;
+    } else if (localStorage.length < 5) {
+      tanzaku_number_box = ["1", "2", "3", "4",];
+      tanzaku_number = 4;
+    } else if (localStorage.length < 6) {
+      tanzaku_number_box = ["1", "2", "3", "4", "5"];
+      tanzaku_number = 5;
+    } else if (localStorage.length < 7) {
+      tanzaku_number_box = ["1", "2", "3", "4", "5", "6"];
+      tanzaku_number = 6;
+    } else if (localStorage.length < 8) {
+      tanzaku_number_box = ["1", "2", "3", "4", "5", "6", "7"];
+      tanzaku_number = 7;
+    }
+
+
+    //お願い事を入力
+    $("#save").on('click', function () {
+
+      if (tanzaku_number_box.length < 7) {
+        tanzaku_number = tanzaku_number + 1;
+        tanzaku_number_box.push(tanzaku_number);
+      }
+      text = $('#input').val();
+      hoge = $('#text_area').val();
+      complete_judge = 0
+      date = { title: text, text: hoge, judge: complete_judge };
+      let tanzakuDate = JSON.stringify(date);
+      localStorage.setItem('memo' + tanzaku_number, tanzakuDate);
+      $(".tanzaku_" + tanzaku_number).addClass("tanzaku_switch");
+      $('#input').val('');
+      $('#text_area').val('');
+    });
+
+    //全てのお願い事を消す
+    $("#clear").on('click', function () {
+      localStorage.removeItem('memo' + 1);
+      localStorage.removeItem('memo' + 2);
+      localStorage.removeItem('memo' + 3);
+      localStorage.removeItem('memo' + 4);
+      localStorage.removeItem('memo' + 5);
+      localStorage.removeItem('memo' + 6);
+      localStorage.removeItem('memo' + 7);
+      $('#input').val('');
+      $('#text_area').val('');
+      $(".tanzaku_" + 1).removeClass("tanzaku_switch");
+      $(".tanzaku_" + 2).removeClass("tanzaku_switch");
+      $(".tanzaku_" + 3).removeClass("tanzaku_switch");
+      $(".tanzaku_" + 4).removeClass("tanzaku_switch");
+      $(".tanzaku_" + 5).removeClass("tanzaku_switch");
+      $(".tanzaku_" + 6).removeClass("tanzaku_switch");
+      $(".tanzaku_" + 7).removeClass("tanzaku_switch");
+      tanzaku_number = 0;
+      tanzaku_number_box = [];
+    });
+
+    // 短冊のモーダルに願い事を表示
+    // $(".tanzaku_" + tanzaku_number).on('click', function () {
+    //   let date2 = localStorage.getItem('memo' + tanzaku_number);
+    //   console.log(date2);
+    //   date2 = JSON.parse(date2);
+    //   console.log(date2);
+    //   $('.wish_title_modal').text(date2.title);
+    //   $('.wish_title_text').text(date2.text);
+    // });
+
+
+    //リロードしたときに短冊を表示
+    if (localStorage.getItem('memo' + 1)) {
+      $(".tanzaku_1").addClass("tanzaku_switch");
+    };
+    if (localStorage.getItem('memo' + 2)) {
+      $(".tanzaku_2").addClass("tanzaku_switch");
+    };
+    if (localStorage.getItem('memo' + 3)) {
+      $(".tanzaku_3").addClass("tanzaku_switch");
+    };
+    if (localStorage.getItem('memo' + 4)) {
+      $(".tanzaku_4").addClass("tanzaku_switch");
+    };
+    if (localStorage.getItem('memo' + 5)) {
+      $(".tanzaku_5").addClass("tanzaku_switch");
+    };
+    if (localStorage.getItem('memo' + 6)) {
+      $(".tanzaku_6").addClass("tanzaku_switch");
+    };
+    if (localStorage.getItem('memo' + 7)) {
+      $(".tanzaku_7").addClass("tanzaku_switch");
+    };
+
+
+    //モーダル 短冊1
+    $(function () {
+      $('#tanzaku_1').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $("#tanzaku_1").on('click', function () {
+      let date1 = localStorage.getItem('memo1');
+      date1 = JSON.parse(date1);
+      $('.wish_title_modal').text(date1.title);
+      $('.wish_title_text').text(date1.text);
+
+      if (date1["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date1["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date1_1 = JSON.stringify(date1);
+        localStorage.setItem('memo1', date1_1);
+        console.log(date1_1);
+
+      });
+
+      console.log(date1);
+
+      //ジャッジの値によって行動を変化
+      // if (date2["judge"] == 0) {
+      // } else if (date2["judge"] == 1) {
+      //   $(".complete").addClass("complete_push");
+      //   $(".button_complete").addClass("button_complete_push");
+      // }
+
+    });
+
+
+
+    //モーダル 短冊2
+    $(function () {
+      $('#tanzaku_2').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $("#tanzaku_2").on('click', function () {
+      let date2 = localStorage.getItem('memo2');
+      date2 = JSON.parse(date2);
+      $('.wish_title_modal').text(date2.title);
+      $('.wish_title_text').text(date2.text);
+
+      if (date2["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date2["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date2_2 = JSON.stringify(date2);
+        localStorage.setItem('memo2', date2_2);
+        console.log(date2_2);
+      });
+      console.log(date2)
+    });
+
+    //モーダル 短冊3
+    $(function () {
+      $('.tanzaku_3').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $(".tanzaku_3").on('click', function () {
+      let date3 = localStorage.getItem('memo3');
+      date3 = JSON.parse(date3);
+      $('.wish_title_modal').text(date3.title);
+      $('.wish_title_text').text(date3.text);
+
+      if (date3["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date3["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date3_3 = JSON.stringify(date3);
+        localStorage.setItem('memo3', date3_3);
+        console.log(date3_3);
+      });
+      console.log(date3)
+    });
+
+    //モーダル 短冊4
+    $(function () {
+      $('.tanzaku_4').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $(".tanzaku_4").on('click', function () {
+      let date4 = localStorage.getItem('memo4');
+      console.log(date4);
+      date4 = JSON.parse(date4);
+      console.log(date4);
+      $('.wish_title_modal').text(date4.title);
+      $('.wish_title_text').text(date4.text);
+
+      if (date4["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date4["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date4_4 = JSON.stringify(date4);
+        localStorage.setItem('memo4', date4_4);
+        console.log(date4_4);
+      });
+      console.log(date4);
+
+    });
+
+    //モーダル 短冊5
+    $(function () {
+      $('.tanzaku_5').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $(".tanzaku_5").on('click', function () {
+      let date5 = localStorage.getItem('memo5');
+      console.log(date5);
+      date5 = JSON.parse(date5);
+      console.log(date5);
+      $('.wish_title_modal').text(date5.title);
+      $('.wish_title_text').text(date5.text);
+
+      if (date5["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date5["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date5_5 = JSON.stringify(date5);
+        localStorage.setItem('memo5', date5_5);
+        console.log(date5_5);
+      });
+      console.log(date5);
+    });
+
+    //モーダル 短冊6
+    $(function () {
+      $('.tanzaku_6').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $(".tanzaku_6").on('click', function () {
+      let date6 = localStorage.getItem('memo6');
+      date6 = JSON.parse(date6);
+      $('.wish_title_modal').text(date6.title);
+      $('.wish_title_text').text(date6.text);
+
+      if (date6["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date6["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date6_6 = JSON.stringify(date6);
+        localStorage.setItem('memo6', date6_6);
+        console.log(date6_6);
+      });
+      console.log(date6)
+    });
+
+
+    //モーダル 短冊7
+    $(function () {
+      $('.tanzaku_7').on('click', function () {
+        $('.js-modal').fadeIn();
+        return false;
+      });
+      $('.js-modal-close').on('click', function () {
+        $('.js-modal').fadeOut();
+        return false;
+      });
+    });
+
+    // 短冊のモーダルに願い事を表示
+    $(".tanzaku_7").on('click', function () {
+      let date7 = localStorage.getItem('memo7');
+      date7 = JSON.parse(date7);
+      $('.wish_title_modal').text(date7.title);
+      $('.wish_title_text').text(date7.text);
+
+      if (date7["judge"] == 0) {
+        $(".complete").removeClass("complete_push");
+        $(".button_complete").removeClass("button_complete_push");
+      }
+
+      //達成ボタンを押したら「おめでとうを表示し、達成ボタンを消す、そしてジャッジを1に」
+      $("#complete_button").on('click', function () {
+        date7["judge"] = 1;
+        $(".complete").addClass("complete_push");
+        $(".button_complete").addClass("button_complete_push");
+        date7_7 = JSON.stringify(date7);
+        localStorage.setItem('memo7', date7_7);
+        console.log(date7_7);
+      });
+      console.log(date7)
+    });
+
+
+    // 達成
+    // $("#complete_button").on('click', function () {
+    //   $(".complete").addClass("complete_push");
+    //   $(".button_complete").addClass("button_complete_push");
+    // });
+
+
+
+
+
+  </script>
+
+</body>
+</html>
